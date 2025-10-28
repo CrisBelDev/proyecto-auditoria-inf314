@@ -1,0 +1,281 @@
+\documentclass[letterpaper,12pt]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+\usepackage{setspace}
+\usepackage[colorlinks=true, linkcolor=black, urlcolor=black, citecolor=black]{hyperref}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{newtxtext,newtxmath} % Fuente Times New Roman
+
+
+% --- CONFIGURACIÓN DE ENCABEZADOS Y PIES ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Auditoría de Base de Datos - FINDEPRO}
+\rhead{Avance del Proyecto}
+\rfoot{Página \thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- CONFIGURACIÓN de TÍTULOS ---
+\titleformat{\section}
+{\normalfont\fontsize{14}{16}\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\fontsize{14}{16}\bfseries}{\thesubsection}{1em}{}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+	
+	% --- PORTADA ---
+	\begin{titlepage}
+		\centering
+		\setstretch{1.3}
+		\vspace*{1cm}
+		
+		{\fontsize{16}{18}\selectfont\bfseries UNIVERSIDAD MAYOR DE SAN ANDRÉS \par}
+		\vspace{0.2cm}
+		{\fontsize{16}{18}\selectfont\bfseries FACULTAD DE CIENCIAS PURAS Y NATURALES \par}
+		{\fontsize{16}{18}\selectfont\bfseries CARRERA DE INFORMÁTICA \par}
+		
+		\vspace{2cm}
+		
+		{\fontsize{16}{18}\selectfont\bfseries AUDITORÍA DE BASE DE DATOS \par}
+		\vspace{0.3cm}
+		{\fontsize{16}{18}\selectfont\bfseries INFORME DE AVANCE \par}
+		\vspace{0.3cm}
+		{\fontsize{16}{18}\selectfont\bfseries Sistema de Gestión FINDEPRO \par}
+		
+		\vspace{2.5cm}
+		
+		{\fontsize{16}{18}\selectfont\bfseries Integrantes: \par}
+		\vspace{0.2cm}
+		{\fontsize{16}{18}\selectfont
+			Cristian Abel Mamani Mamani \par
+			Carmen Reyna Candia Suñagua \par
+			Gonzalo Rafael Esprella Coaquira \par
+			Limbert Nelson Escobar Mamani \par
+			Limberth Carbajal Colque \par
+			Greis Estefani Gonzales Chávez \par
+		}
+		
+		\vspace{1cm}
+		
+		{\fontsize{16}{18}\selectfont\bfseries Asignatura: Auditoría Informática (INF-314) \par}
+		{\fontsize{16}{18}\selectfont\bfseries Docente: M. Sc. Miguel Cotaña Mier \par}
+		
+		\vfill
+		
+		{\fontsize{16}{18}\selectfont La Paz - Bolivia \\ Octubre, 2025 \par}
+	\end{titlepage}
+	% --- FIN DE PORTADA ---
+	
+	
+	
+	\tableofcontents % Añade tabla de contenido
+	\newpage
+	\onehalfspacing % Interlineado 1.5
+	
+	% --- SECCIONES DEL INFORME ---
+	
+	\section{Identificación de la Entidad y Sistema a Auditar}
+	
+	\subsection{La Entidad}
+	\begin{itemize}
+		\item \textbf{Nombre Principal:} FINDEPRO (Entidades Financieras de Desarrollo para Productores).
+		\item \textbf{Tipo de Entidad:} Institución Financiera de Desarrollo (IFD).
+		\item \textbf{Descripción Breve:} FINDEPRO se enfoca en proveer servicios financieros al sector productivo.
+	\end{itemize}
+	
+	\subsection{Sistema a Auditar}
+	\begin{itemize}
+		\item \textbf{Nombre/Descripción:} Base de Datos del Sistema de Gestión [Especificar nombre si se conoce, ej. "Sistema de Gestión de Clientes y Créditos"] utilizado por FINDEPRO.
+		\item \textbf{Propósito del Sistema (inferido):} Gestionar información de clientes/socios (datos personales, productivos), operaciones financieras (créditos, desembolsos), seguimiento de proyectos, y generación de reportes operativos y de transparencia.
+		\item \textbf{Tecnología de Base de Datos (a confirmar):} [Indicar si se conoce, ej. PostgreSQL, SQL Server, Oracle, MySQL].
+	\end{itemize}
+	
+	\section{Descripción General de Funcionalidades}
+	
+	\begin{itemize}
+		\item Registro y gestión de clientes/socios.
+		\item Administración de créditos y cartera (FINDEPRO).
+		\item Generación de informes financieros y de producción.
+		\item Gestión de usuarios y permisos dentro del sistema.
+	\end{itemize}
+	
+	
+	\section{Objetivos y Alcance de la Auditoría}
+	
+	\subsection{Objetivo General}
+	Evaluar integralmente la gestión, seguridad y rendimiento de la base de datos, identificando riesgos, verificando la efectividad de los controles implementados y proponiendo recomendaciones para fortalecer la protección de los datos y optimizar su uso, considerando las necesidades operativas de FINDEPRO.
+	
+	\subsection{Objetivos Específicos}
+	\begin{itemize}
+		\item Evaluar la \textbf{seguridad de acceso} a la base de datos, incluyendo la gestión de usuarios, roles, permisos y políticas de autenticación.
+		
+		\item Verificar la \textbf{integridad y consistencia} de los datos almacenados, analizando la estructura del esquema, el uso de constraints y la calidad de los datos.
+		
+		\item Validar las medidas de \textbf{confidencialidad} aplicadas a datos sensibles, como el cifrado en reposo y en tránsito.
+		
+		\item Examinar los procedimientos de \textbf{respaldo y recuperación} (Backup \& Restore) para asegurar la disponibilidad de la información ante contingencias.
+		
+		\item Analizar los mecanismos de \textbf{auditoría y monitoreo} de la base de datos para garantizar la trazabilidad y detección de actividades anómalas.
+		
+		\item Evaluar el \textbf{rendimiento} general de la base de datos e identificar posibles cuellos de botella u optimizaciones en consultas críticas.
+		
+		\item Verificar el \textbf{cumplimiento} con políticas internas de FINDEPRO y normativas externas relevantes.
+	\end{itemize}
+	
+	\subsection{Alcance}
+	La auditoría se centrará exclusivamente en la base de datos principal que soportan el sistema, incluyendo:
+	\begin{itemize}
+		\item El servidor de base de datos (Configuración, versionamiento, parches).
+		\item El esquema de la base de datos (Tablas, vistas, funciones, procedimientos almacenados, triggers relacionados con FINDEPRO).
+		\item Los mecanismos de seguridad implementados (Roles, permisos, cifrado).
+		\item Los procesos de respaldo y recuperación documentados.
+		\item Los logs de auditoría y rendimiento disponibles.
+	\end{itemize}
+	No se incluye en el alcance la auditoría de la aplicación cliente, la infraestructura de red (más allá de la conexión a la BD) o la seguridad física del centro de datos, excepto en lo que impacte directamente a la base de datos.
+	
+	\section{Objeto de la Auditoría} % Nueva sección
+	El objeto específico de esta auditoría es la \textbf{base de datos} del sistema. Esto incluye el análisis de su diseño lógico y físico, los controles de seguridad implementados a nivel del SGBD, los procedimientos de administración (backup, monitoreo, gestión de usuarios), la integridad de los datos almacenados y el cumplimiento de las políticas y normativas aplicables a la información gestionada por FINDEPRO.
+	
+	\section{Metodología y Criterios de Auditoría}
+	
+	\subsection{Enfoque Metodológico}
+	Se aplicará un enfoque basado en riesgos, alineado con marcos de referencia internacionales como \textbf{COBIT 2019} (especialmente los dominios APO y DSS) e \textbf{ISO/IEC 27001/27002}. Se combinarán técnicas cualitativas (entrevistas, revisión documental) y cuantitativas (análisis de logs, ejecución de scripts SQL). Se adopta una perspectiva crítica orientada a la mejora continua.
+	
+	\subsection{Dominio COBIT Aplicado (Preliminar)}
+	Se tomará como referencia principal el dominio \textbf{DSS (Deliver, Service and Support)} de COBIT 2019, con énfasis en:
+	\begin{itemize}
+		\item \textbf{DSS05 Gestionar los Servicios de Seguridad:} Relevante para evaluar la protección de la información en la base de datos.
+		\item \textbf{DSS06 Gestionar los Controles del Proceso de Negocio:} Para asegurar que los controles de la base de datos soportan la integridad de los procesos de FINDEPRO.
+	\end{itemize}
+	Esto se complementará con controles específicos de ISO 27002.
+	
+	\subsection{Modalidad y Niveles de Investigación}
+	La auditoría será \textbf{mixta}, combinando:
+	\begin{itemize}
+		\item \textbf{Investigación Documental:} Análisis de políticas, manuales, diagramas, etc.
+		\item \textbf{Investigación de Campo:} Entrevistas, observación, pruebas técnicas directas sobre la BD (con acceso de lectura).
+	\end{itemize}
+	Se abordarán los niveles \textbf{Exploratorio} (identificación inicial), \textbf{Descriptivo} (documentación del estado actual) y \textbf{Explicativo} (análisis de causas y efectos).
+	
+	\subsection{Población y Muestra}
+	\begin{itemize}
+		\item \textbf{Población:} Componentes de la BD, procesos dependientes (registro de clientes, créditos, etc.), usuarios (DBAs, desarrolladores, usuarios finales clave).
+		\item \textbf{Muestra:} Se seleccionarán muestras representativas de tablas críticas, configuraciones de seguridad, logs de auditoría y usuarios para un análisis detallado. La selección será basada en riesgos.
+	\end{itemize}
+	
+	\subsection{Técnicas e Instrumentos (Planeados)}
+	\begin{itemize}
+		\item \textbf{Revisión Documental:} Checklists basados en COBIT/ISO.
+		\item \textbf{Entrevistas:} Cuestionarios estructurados para DBAs y personal relevante.
+		\item \textbf{Observación y Pruebas Técnicas:} Scripts SQL para verificar permisos, constraints, configuraciones; revisión de logs; uso de herramientas de administración del SGBD.
+	\end{itemize}
+	
+	\subsection{Procesamiento de la Información}
+	Los datos recopilados serán clasificados, analizados (descriptiva y críticamente) y contrastados con los criterios de auditoría para identificar hallazgos, determinar causas raíz y formular recomendaciones.
+	\subsection{Normativa Aplicable}
+	La auditoría tomará como referencia principal las siguientes normativas y marcos:
+	
+	\begin{itemize}
+		\item \textbf{ISO/IEC 27001:2022 Gestión de la Seguridad de la Información.}
+		\item \textbf{ISO/IEC 27002:2022 Controles de Seguridad de la Información.}
+		\item \textbf{COBIT 2019 - Gobierno y Gestión de Tecnologías de Información.}
+		\item \textbf{ISO 9001:2015 - Gestión de la Calidad.}
+		\item \textbf{ISO/IEC 20000-1:2018 Gestión de Servicios de TI.}
+		\item \textbf{Ley N° 164 General de Telecomunicaciones, Tecnologías de Información y Comunicación (Bolivia):} Potencialmente aplicable a la protección de datos. (Se debe verificar si existe una ley específica de protección de datos más reciente o si se aplica esta de forma supletoria).
+		\item \textbf{Regulaciones de la ASFI (Autoridad de Supervisión del Sistema Financiero):} Aplicables a FINDEPRO como IFD, especialmente en cuanto a seguridad de la información y continuidad del negocio.
+		\item \textbf{Políticas Internas de FINDEPRO.}
+		\item \textbf{NIST Cybersecurity Framework (Referencia complementaria).}
+	\end{itemize}
+	
+	
+	\subsection{Criterios Específicos de Auditoría}
+	Los criterios concretos contra los cuales se evaluará la base de datos incluyen:
+	\begin{itemize}
+		\item Políticas internas de seguridad de FINDEPRO.
+		\item Buenas prácticas para el SGBD específico (ej. CIS Benchmarks).
+		\item Controles relevantes de ISO/IEC 27002 y COBIT DSS05/DSS06.
+		\item Requerimientos normativos aplicables (ASFI, Protección de Datos).
+	\end{itemize}
+	
+	\section{Estado Actual del Proyecto}
+	
+	A la fecha, el equipo auditor ha completado las siguientes actividades:
+	\begin{itemize}
+		\item \textbf{Fase de Planificación Concluida:} Se han definido y documentado los objetivos, el alcance detallado, la metodología, los criterios de auditoría y el cronograma general del proyecto.
+		\item \textbf{Solicitud Formal de Recursos:} Se ha enviado la comunicación oficial a FINDEPRO solicitando:
+		\begin{itemize}
+			\item Acceso de solo lectura a la base de datos del sistema.
+			\item Documentación técnica relevante (Modelo E-R, Diccionario de Datos, Políticas de Seguridad y Backup).
+			\item Disponibilidad para entrevistas con el personal técnico responsable (DBA, Equipo de Desarrollo/Soporte).
+		\end{itemize}
+		\textit{Estado actual: Pendiente de recepción de credenciales y documentación.}
+		\item \textbf{Preparación de Instrumentos:} Se han elaborado cuestionarios iniciales y checklists basados en COBIT/ISO y regulaciones ASFI (preliminar). Se han preparado scripts SQL genéricos para verificaciones iniciales.
+		\item \textbf{Matriz de Riesgos Preliminar:} Se ha desarrollado una matriz identificando riesgos potenciales específicos para el contexto financiero/productivo.
+	\end{itemize}
+	
+	\section{Plan de Pruebas Detallado}
+	% --- (Esta sección se mantiene igual que la versión anterior) ---
+	\subsection{Gestión de Accesos y Seguridad}
+	\begin{itemize}
+		\item Inventario y análisis de cuentas de usuario y roles definidos en la BD.
+		\item Verificación de la asignación del principio de mínimo privilegio.
+		\item Revisión de la configuración de autenticación y políticas de contraseñas.
+		\item Análisis de permisos sobre objetos críticos.
+	\end{itemize}
+	\subsection{Integridad y Consistencia de Datos}
+	\begin{itemize}
+		\item Comprobación de claves primarias y foráneas.
+		\item Verificación de constraints (UNIQUE, CHECK).
+		\item Búsqueda de registros huérfanos o inconsistentes.
+		\item Análisis de la estructura de normalización.
+	\end{itemize}
+	\subsection{Confidencialidad de Datos}
+	\begin{itemize}
+		\item Identificación de columnas con datos sensibles.
+		\item Verificación de cifrado en reposo y en tránsito.
+	\end{itemize}
+	\subsection{Disponibilidad y Recuperación}
+	\begin{itemize}
+		\item Revisión de configuración de backups.
+		\item Verificación de planes de restauración.
+	\end{itemize}
+	\subsection{Auditoría y Monitoreo}
+	\begin{itemize}
+		\item Comprobación de habilitación de logs de auditoría.
+		\item Revisión de configuración de monitoreo de rendimiento.
+	\end{itemize}
+	
+	\section{Riesgos Anticipados y Áreas de Enfoque}
+	% --- (Esta sección se mantiene igual que la versión anterior) ---
+	\begin{itemize}
+		\item \textbf{Gestión de Privilegios:} Riesgo de permisos excesivos.
+		\item \textbf{Protección de Datos Sensibles:} Posible almacenamiento en texto plano de datos de socios/clientes.
+		\item \textbf{Consistencia de Datos:} Falta de integridad referencial.
+		\item \textbf{Auditoría de Cambios:} Insuficiente trazabilidad.
+	\end{itemize}
+	
+	\section{Próximos Pasos}
+	% --- (Esta sección se mantiene igual que la versión anterior) ---
+	\begin{enumerate}
+		\item Seguimiento activo a la solicitud de accesos y documentación. \textbf{Dependencia crítica.}
+		\item Reconocimiento detallado del esquema y configuración de la BD.
+		\item Ejecución de pruebas planificadas (Gestión de Accesos primero).
+		\item Documentación rigurosa de evidencia.
+		\item Realización de entrevistas técnicas.
+		\item Análisis de evidencia y redacción de hallazgos preliminares.
+	\end{enumerate}
+	
+	
+	
+\end{document}

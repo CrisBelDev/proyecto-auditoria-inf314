@@ -1,0 +1,16 @@
+# Archivos auxiliares de LaTeX
+*.aux
+*.log
+*.blg
+*.bbl
+*.synctex.gz
+*.toc
+*.out
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+
+# Archivo PDF final (usualmente no se versiona, 
+# ya que se genera desde el .tex)
+*.pdf
