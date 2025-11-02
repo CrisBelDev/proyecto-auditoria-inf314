@@ -1,0 +1,237 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Este es el CÓDIGO LATEX de un documento PDF simulado.
+% Título: Documentación Técnica - Sistema de Gestión FINDEPRO (v1.1 ORIGINAL)
+% Simula la respuesta de la empresa al Punto 2 de la solicitud de auditoría.
+% ESTÁ DISEÑADO PARA CONTENER HALLAZGOS DE AUDITORÍA CRÍTICOS Y EXTENSOS.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, 11pt, landscape]{article} % Página horizontal para tablas
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel} 
+\usepackage[margin=2cm]{geometry} % Márgenes
+\usepackage{graphicx}
+\usepackage{fancyhdr} % Cabeceras y pies de página
+\usepackage{booktabs} % Tablas profesionales
+\usepackage[table]{xcolor} % Colores en tablas
+\usepackage{lastpage} % Contar páginas "Página X de Y"
+\usepackage{parskip} % Espacio entre párrafos
+\usepackage{array} % Para mejor control de columnas
+\usepackage{longtable} % Para tablas que ocupan varias páginas
+
+% --- CONFIGURACIÓN DE CABECERA Y PIE DE PÁGINA (Branding FINDEPRO) ---
+\pagestyle{fancy}
+\fancyhf{} 
+\lhead{FINDEPRO - Documentación Técnica Interna}
+\rhead{\textbf{CONFIDENCIAL}}
+\cfoot{Página \thepage\ de \pageref{LastPage}}
+\rfoot{\textcolor{red}{\textbf{ESTADO: DESACTUALIZADO (2018)}}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+	
+	% --- PORTADA ---
+	\thispagestyle{empty}
+	
+		\begin{center}
+			\vspace*{1cm}
+			{\Huge \textbf{FINDEPRO}} \\
+			\vspace*{0.2cm}
+			{\large Institución Financiera de Desarrollo}
+			
+			\vspace*{3cm}
+			
+			{\LARGE \textbf{Documentación Técnica}} \\
+			{\huge \textbf{Sistema de Gestión FINDEPRO (SGF)}}
+			
+			\vspace*{0.5cm}
+			
+			{\Large Diccionario de Datos y Modelo Lógico}
+			
+			\vspace{2cm}
+			
+			{\Large \textcolor{red}{\textbf{Versión: 1.1 (Diseño Original)}}}
+			
+			\vspace*{3cm}
+			
+			\begin{tabular}{ll}
+				\textbf{Fecha de Creación:} & 10 de enero de 2018 \\
+				\textbf{Última Revisión:} & 20 de marzo de 2019 (Notas por J.R.) \\
+				\textbf{Propietario:} & Gerencia de Tecnología \\
+			\end{tabular}
+			
+			\vfill
+			
+			{\small \textit{Este documento describe el diseño original de la BD. La implementación productiva puede diferir. Las notas en cursiva fueron añadidas por J. Rodriguez (ex-DBA) en 2019.}}
+		\end{center}
+
+	\newpage
+	
+	% --- HISTORIAL DE REVISIONES ---
+	\section*{1. Historial de Revisiones}
+	\begin{tabular}{lllp{10cm}}
+		\toprule
+		\textbf{Versión} & \textbf{Fecha} & \textbf{Autor} & \textbf{Descripción del Cambio} \\
+		\midrule
+		1.0 & 10/01/2018 & DevTeam & Creación del documento base. Diseño inicial. \\
+		1.1 & 20/03/2019 & J.R. (DBA) & \textbf{Revisión de estado.} Añadidas notas de hallazgos y riesgos. \textit{No se aplicaron cambios en la BD.} \\
+		\bottomrule
+	\end{tabular}
+	\textbf{Hallazgo (Auditor):} \textit{La documentación no se actualiza formalmente desde 2018. Las revisiones de 2019 solo identificaron problemas que no fueron resueltos.}
+	
+	% --- SGBD INFO ---
+	\section*{2. Información del SGBD}
+	\begin{itemize}
+		\item \textbf{Sistema Gestor:} Microsoft SQL Server 2016
+		\item \textbf{Edición:} Standard (SP2) - \textbf{Versión:} 13.0.5102.1
+		\item \textbf{Servidor (Hostname):} SRV-DB-01.findepro.local
+		\item \textbf{Base de Datos Principal:} FINDEPRO\_PROD
+		\item \textbf{Nota (J.R. 2019):} \textit{Versión 2016 está próxima a salir de soporte estándar. Se debe planificar la migración a SQL 2019. (Hallazgo: Esto nunca se hizo).}
+	\end{itemize}
+	
+	% --- MODELO E-R ---
+	\section*{3. Modelo Lógico (Conceptual 2018)}
+	\begin{figure}[h!]
+		\centering
+		\fbox{
+			\parbox[c][15cm][c]{0.9\textwidth}{
+				\centering
+				\vspace{5cm}
+				{\Large \textbf{IMAGEN NO DISPONIBLE}} \\
+				\vspace{0.5cm}
+				{\large (Simulación de \texttt{Modelo\_Logico\_Conceptual.png})} \\
+				\vspace{0.5cm}
+				\small El diagrama mostraría relaciones "limpias" (1 a N) entre:
+				\small \texttt{Agencias -> Socios}, \texttt{Socios -> Creditos}, \texttt{Creditos -> Desembolsos}, \texttt{Creditos -> Pagos}, \texttt{Roles -> UsuariosDelSistema}.
+				\small \textbf{Estas relaciones (FKs) NO existen en la implementación real.}
+			}
+		}
+		\caption{Modelo E-R Conceptual (2018). \textbf{No usar como referencia física.}}
+	\end{figure}
+	\newpage
+	
+	% --- DICCIONARIO DE DATOS ---
+	\section*{4. Diccionario de Datos (Extenso)}
+	
+	\begin{longtable}{p{2.5cm} p{2.5cm} p{1cm} p{14cm}}
+		\caption{Diccionario de Datos - Tablas Principales} \label{tab:diccionario} \\
+		\toprule
+		\rowcolor{gray!40}
+		\textbf{Columna} & \textbf{Tipo de Dato} & \textbf{Nulo} & \textbf{Descripción / Reglas de Negocio} \\
+		\midrule
+		\endfirsthead
+		\multicolumn{4}{c}%
+		{{\bfseries \tablename\ \thetable{} -- continuación}} \\
+		\toprule
+		\rowcolor{gray!40}
+		\textbf{Columna} & \textbf{Tipo de Dato} & \textbf{Nulo} & \textbf{Descripción / Reglas de Negocio} \\
+		\midrule
+		\endhead
+		\bottomrule
+		\multicolumn{4}{r}{{Continúa en la siguiente página...}} \\
+		\endfoot
+		\bottomrule
+		\endlastfoot
+		
+		% --- Tabla Agencias ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Agencias]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Maestro de agencias y sucursales de FINDEPRO.}} \\
+		\midrule
+		\texttt{ID\_Agencia} & \texttt{int} (PK) & No & Llave Primaria. \\
+		\texttt{NombreAgencia} & \texttt{varchar(100)} & No & Nombre oficial (Ej: "Agencia Central", "Sucursal El Alto"). \\
+		\texttt{Direccion} & \texttt{varchar(250)} & Sí & \\
+		\texttt{Telefono} & \texttt{varchar(50)} & Sí & \textit{Nota (J.R.): Debería ser \texttt{varchar(20)}. Campo sobredimensionado.} \\
+		\texttt{ID\_Region} & \texttt{int} & Sí & \textit{Nota (J.R.): Sin FK a una tabla de Regiones. Dato no confiable.} \\
+		\midrule
+		
+		% --- Tabla Socios ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Socios]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Almacena la información de los socios/clientes. \textbf{ALERTA: En producción se llama \texttt{[dbo].[Clientes]}.}}} \\
+		\midrule
+		\texttt{ID\_Socio} & \texttt{int} (PK) & No & Llave Primaria. \\
+		\texttt{Nombres} & \texttt{varchar(100)} & No & \\
+		\texttt{Apellidos} & \texttt{varchar(100)} & No & \\
+		\texttt{CI} & \texttt{varchar(20)} & No & \textbf{Dato Sensible (PII). Almacenado en TEXTO PLANO.} \\
+		\texttt{FechaNacimiento} & \texttt{date} & Sí & \\
+		\texttt{Direccion} & \texttt{varchar(255)} & Sí & \textbf{Dato Sensible (PII). Almacenado en TEXTO PLANO.} \\
+		\texttt{Telefono} & \texttt{varchar(30)} & Sí & \\
+		\texttt{Email} & \texttt{varchar(100)} & Sí & \\
+		\texttt{SueldoMensual} & \texttt{decimal(10,2)} & Sí & \textbf{Dato Sensible (Financiero). Almacenado en TEXTO PLANO.} \\
+		\texttt{Ciudad} & \texttt{varchar(50)} & Sí & \textbf{Problema de Calidad:} 'La Paz', 'LP', 'L.P.', 'LaPaz', 'El Alto', 'E.A.'. \\
+		\texttt{ID\_Agencia} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Agencias]}. \textbf{No existe constraint de FK.} \\
+		\midrule
+		
+		% --- Tabla Creditos ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Creditos]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Maestro de créditos aprobados.}} \\
+		\midrule
+		\texttt{ID\_Credito} & \texttt{int} (PK) & No & Llave Primaria. \\
+		\texttt{ID\_Socio} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Socios]}. \textbf{No existe constraint de FK.} \textit{Nota (J.R.): Se encontraron 12 créditos sin socio válido (huérfanos) en 2019.} \\
+		\texttt{Monto\_Aprobado} & \texttt{decimal(18,2)} & No & Monto en Bolivianos (BOB). \\
+		\texttt{Tipo\_Credito} & \texttt{int} & No & \textit{Nota (J.R.): Es una FK Lógica a la tabla \texttt{[TiposCredito]}, ¡pero esta tabla NUNCA SE CREÓ! La aplicación usa un ENUM (1=Productivo, 2=Consumo). ¡Riesgo de integridad!} \\
+		\texttt{Estado} & \texttt{char(3)} & Sí & (Ej: 'APR', 'DES', 'CAN', 'MRA'). \\
+		\texttt{Fecha\_Aprobacion} & \texttt{datetime} & Sí & \\
+		\texttt{Usuario\_Aprobador} & \texttt{varchar(50)} & Sí & Login del \texttt{[UsuariosDelSistema]}. \\
+		\midrule
+		
+		% --- Tabla Desembolsos ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Desembolsos]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Registra los desembolsos de dinero asociados a un crédito.}} \\
+		\midrule
+		\texttt{ID\_Desembolso} & \texttt{bigint} (PK) & No & Llave Primaria. \\
+		\texttt{ID\_Credito} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Creditos]}. \textbf{No existe constraint de FK.} \textit{Nota (J.R.): Causa principal de descuadres contables.} \\
+		\texttt{Monto\_Desembolsado} & \texttt{decimal(18,2)} & No & Monto en BOB. \\
+		\texttt{Fecha\_Desembolso} & \texttt{datetime} & No & Fecha y hora del desembolso. \\
+		\texttt{ID\_Usuario\_Caja} & \texttt{int} & No & FK (Lógica) a \texttt{[UsuariosDelSistema]}. \\
+		\midrule
+		
+		% --- Tabla Pagos ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Pagos]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Registra los pagos (cuotas) que realizan los socios.}} \\
+		\midrule
+		\texttt{ID\_Pago} & \texttt{bigint} (PK) & No & Llave Primaria. \\
+		\texttt{ID\_Credito} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Creditos]}. \textbf{No existe constraint de FK.} \\
+		\texttt{Nro\_Cuota} & \texttt{int} & No & \\
+		\texttt{Monto\_Pagado} & \texttt{decimal(18,2)} & No & \\
+		\texttt{Fecha\_Pago} & \texttt{datetime} & No & \\
+		\texttt{ID\_Usuario\_Caja} & \texttt{int} & No & FK (Lógica) a \texttt{[UsuariosDelSistema]}. \\
+		\midrule
+		
+		% --- Tabla Roles ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Roles]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Roles de la aplicación SGF.}} \\
+		\midrule
+		\texttt{ID\_Rol} & \texttt{int} (PK) & No & Llave Primaria. \\
+		\texttt{NombreRol} & \texttt{varchar(50)} & No & (Ej: 'Administrador', 'Oficial de Credito', 'Cajero'). \\
+		\texttt{Descripcion} & \texttt{varchar(200)} & Sí & \\
+		\midrule
+		
+		% --- Tabla UsuariosDelSistema ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[UsuariosDelSistema]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Usuarios que acceden al Sistema de Gestión FINDEPRO (SGF).}} \\
+		\midrule
+		\texttt{ID\_Usuario} & \texttt{int} (PK) & No & Llave Primaria. \\
+		\texttt{Login} & \texttt{varchar(50)} & No & Nombre de usuario (ej: cguachalla). \\
+		\textbf{\texttt{Password}} & \textbf{\texttt{varchar(50)}} & \textbf{No} & \textbf{¡¡¡RIESGO CRÍTICO (J.R. 2019)!!! LA CONTRASEÑA SE ALMACENA EN TEXTO PLANO.} \\
+		\texttt{NombreCompleto} & \texttt{varchar(200)} & No & \\
+		\texttt{ID\_Rol} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Roles]}. \textbf{No existe constraint de FK.} \\
+		\texttt{ID\_Agencia} & \texttt{int} & No & \textbf{FK LÓGICA} a \texttt{[dbo].[Agencias]}. \textbf{No existe constraint de FK.} \\
+		\texttt{Activo} & \texttt{bit} & No & 1 = Activo, 0 = Inactivo. \\
+		\texttt{Fecha\_Ultimo\_Login} & \texttt{datetime} & Sí & \\
+		\texttt{Email} & \texttt{varchar(100)} & Sí & \\
+		\midrule
+		
+		% --- Tabla Obsoleta ---
+		\multicolumn{4}{l}{\textbf{Tabla: \texttt{[dbo].[Socios\_BKP\_2017]}}} \\
+		\multicolumn{4}{l}{\textit{Descripción: Tabla obsoleta. Backup de migración inicial.}} \\
+		\midrule
+		\texttt{ID\_Socio\_OLD} & \texttt{varchar(10)} & Sí & \\
+		\texttt{Nombre\_Comp} & \texttt{varchar(200)} & Sí & \\
+		\multicolumn{4}{l}{\textit{Nota (J.R.): Tabla obsoleta. Ocupa 500MB. Riesgo de seguridad (datos de socios sin control de acceso). Pendiente de eliminación. No borrar por si acaso.}} \\
+		\bottomrule
+		
+	\end{longtable}
+\end{document}

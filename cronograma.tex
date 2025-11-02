@@ -1,0 +1,175 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Este es el CÓDIGO LATEX para un Plan de Auditoría
+% Basado en el estilo de '8Formula.pdf' y los datos de 'proyecto314.pdf'
+%
+% VERSIÓN CORREGIDA Y MEJORADA:
+% 1. Corregido el error '\end{G}'
+% 2. Añadido interlineado en tablas con '\arraystretch' (solicita del usuario)
+% 3. Ajustadas columnas para evitar 'Overfull \hbox'
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[a4paper, 11pt]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern} % Fuente LaTeX moderna
+\usepackage[spanish]{babel} 
+\usepackage[margin=2.5cm]{geometry} % Márgenes
+\usepackage{parskip} % Espacio entre párrafos, sin sangría
+\usepackage{array}   % Para \newcolumntype
+\usepackage{longtable} % Para tablas que pueden ocupar varias páginas
+\usepackage[table]{xcolor} % Para colores en tablas
+
+% --- CONFIGURACIÓN DE TABLAS ---
+% Para replicar el estilo del ejemplo (líneas y texto justificado)
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\definecolor{tableHeader}{gray}{0.9} % Color de cabecera
+
+% ===>>> ¡AQUÍ ESTÁ LA LÍNEA PARA EL INTERLINEADO! <<<===
+\renewcommand{\arraystretch}{1.5} % Aumenta el espacio vertical en las filas
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+\section*{PLAN DE AUDITORÍA}
+\subsection*{INFORMACIÓN DE AUDITORÍA}
+
+\noindent
+\begin{tabular}{|L{5cm}|p{10cm}|}
+	\hline
+	\multicolumn{2}{|c|}{\cellcolor{tableHeader} \textbf{INFORMACIÓN DE LA ENTIDAD AUDITADA}} \\
+	\hline
+	\textbf{Empresa:} & FINDEPRO (Entidades Financieras de Desarrollo para Productores) \\
+	\hline
+	\textbf{Dirección:} & (Simulado) Av. Arce, Edificio Torres del Poeta, Piso 15, La Paz \\
+	\hline
+	\textbf{Representante de la empresa:} & (Simulado) Sra. Ana María Gutiérrez (Gerente General) \\
+	\hline
+	\textbf{Persona de contacto:} & (Simulado) Sr. Carlos Guachalla (Jefe de Sistemas) \\
+	\hline
+	\textbf{Teléfono:} & (Simulado) 22441122 \\
+	\hline
+	\textbf{E-mail:} & (Simulado) cguachalla@findepro.bo \\
+	\hline
+\end{tabular}
+
+\vspace{0.5cm}
+
+\noindent
+\begin{longtable}{|L{5cm}|p{10cm}|}
+	\hline
+	\multicolumn{2}{|c|}{\cellcolor{tableHeader} \textbf{INFORMACIÓN DE LA AUDITORÍA}} \\
+	\hline
+	\textbf{Tipo de auditoría:} & Auditoría Académica (Proyecto de asignatura INF-314) \\
+	\hline
+	\textbf{Fecha de inicio de la Auditoría:} & (Sugerido) 27/10/2025 \\
+	\hline
+	\textbf{Fecha de fin de la Auditoría:} & (Sugerido) 08/12/2025 \\
+	\hline
+	\textbf{Norma objeto de la Auditoría:} & \textbf{Marco de referencia COBIT 2019} (con énfasis en dominios APO y DSS), \textbf{ISO/IEC 27001/27002}, y \textbf{Regulaciones ASFI} aplicables a IFD. \\
+	\hline
+	\textbf{Alcance auditado:} & La auditoría se centrará \textbf{exclusivamente en la base de datos principal} que soporta el Sistema de Gestión FINDEPRO, incluyendo:
+	\begin{itemize}
+		\item El servidor de base de datos (Configuración, versionamiento, parches).
+		\item El esquema de la base de datos (Tablas, vistas, procedimientos, triggers).
+		\item Los mecanismos de seguridad (Roles, permisos, cifrado).
+		\item Los procesos de respaldo y recuperación (Backup \& Restore).
+		\item Los logs de auditoría y rendimiento disponibles.
+	\end{itemize}
+	\textbf{No se incluye} en el alcance la auditoría de la aplicación cliente, la infraestructura de red o la seguridad física (excepto en lo que impacte directamente a la BD). \\
+	\hline
+	\textbf{Objetivo de la Auditoría:} & \textbf{Objetivo General:} Evaluar integralmente la gestión, seguridad y rendimiento de la base de datos de FINDEPRO, identificando riesgos, verificando la efectividad de los controles implementados y proponiendo recomendaciones para fortalecer la protección de los datos y optimizar su uso. \\
+	\hline
+	\textbf{Criterios de Auditoría:} & 
+	\begin{itemize}
+		\item Políticas internas de seguridad de FINDEPRO.
+		\item Buenas prácticas para el SGBD específico (ej. CIS Benchmarks).
+		\item Controles relevantes de ISO/IEC 27002 y COBIT DSS05/DSS06.
+		\item Requerimientos normativos aplicables (ASFI, Protección de Datos).
+	\end{itemize} \\
+	\hline
+	\textbf{Reunión de apertura:} & 
+	\textbf{Fecha:} 27/10/2025 \quad \textbf{Hora:} 10:00 \quad \textbf{Sede:} (Simulado) Oficinas FINDEPRO \\
+	\hline
+	\textbf{Reunión de Cierre:} & 
+	\textbf{Fecha:} 05/12/2025 \quad \textbf{Hora:} 10:00 \quad \textbf{Sede:} (Sugerido) Sala de Reuniones UMSA \\
+	\hline
+\end{longtable}
+
+\subsection*{EQUIPO AUDITOR}
+\noindent
+\begin{tabular}{|L{5cm}|p{6cm}|L{4cm}|}
+	\hline
+	\multicolumn{3}{|c|}{\cellcolor{tableHeader} \textbf{MIEMBROS DEL EQUIPO}} \\
+	\hline
+	\textbf{Supervisor Académico:} & M. Sc. Miguel Cotaña Mier & (Docente INF-314) \\
+	\hline
+	\textbf{Líder Auditor:} & Cristian Abel Mamani Mamani & (Simulado) cmamanim@fcpn.edu.bo \\
+	\hline
+	\textbf{Auditor Junior:} & Carmen Reyna Candia Suñagua & (Simulado) ccandias@fcpn.edu.bo \\
+	\hline
+	\textbf{Auditor Junior:} & Gonzalo Rafael Esprella Coaquira & (Simulado) gesprellac@fcpn.edu.bo \\
+	\hline
+	\textbf{Auditor Junior:} & Limbert Nelson Escobar Mamani & (Simulado) lescobarm@fcpn.edu.bo \\
+	\hline
+	\textbf{Auditor Junior:} & Limberth Carbajal Colque & (Simulado) lcarbajalc@fcpn.edu.bo \\
+	\hline
+	\textbf{Auditor Junior:} & Greis Estefani Gonzales Chávez & (Simulado) ggonzalesc@fcpn.edu.bo \\
+	\hline
+\end{tabular}
+
+\vspace{0.5cm}
+\subsection*{FUNCIONES, RESPONSABILIDADES Y OBLIGACIONES}
+\noindent
+% Ajuste de p{0.48\textwidth} a p{0.47\textwidth} para evitar overfull box
+\begin{tabular}{|p{0.47\textwidth}|p{0.47\textwidth}|}
+	\hline
+	\multicolumn{1}{|c|}{\cellcolor{tableHeader} \textbf{AUDITORES}} & \multicolumn{1}{c|}{\cellcolor{tableHeader} \textbf{AUDITADO}} \\
+	\hline
+	\textbf{FUNCIONES} & \textbf{FUNCIONES} \\
+	\begin{itemize}
+		\item \textbf{Líder Auditor:} Redactar, modificar y gestionar el plan de auditoría.
+		\item Distribución del plan de auditoría.
+		\item Recopilación de las evidencias necesarias.
+		\item Detectar y verificar todos los hallazgos.
+		\item Redactar y gestionar el Informe de la auditoría.
+		\item \textbf{Auditor Junior:} Reforzar y aconsejar al equipo en temas técnicos.
+	\end{itemize} & 
+	\begin{itemize}
+		\item Establecer los contactos y los horarios para las reuniones.
+		\item Establecer la fecha de visita a los centros de trabajo.
+		\item Ser testigos de la auditoría en nombre de la empresa auditada.
+	\end{itemize} \\
+	\hline
+	\textbf{RESPONSABILIDADES} & \textbf{RESPONSABILIDADES} \\
+	\begin{itemize}
+		\item Comprender y dominar toda la materia auditada.
+		\item Aclarar toda duda referente a la auditoría.
+		\item Cumplir con el acuerdo de confidencialidad.
+		\item Determinar la viabilidad de la auditoría.
+		\item Gestionar de manera eficaz todo el proceso.
+	\end{itemize} &
+	\begin{itemize}
+		\item Asistir a la reunión de apertura y cierre.
+		\item Comprender, revisar y aceptar el Plan de auditoría.
+		\item Suministrar al auditor todas las evidencias necesarias.
+		\item Dotar al auditor del equipo de protección necesario (si aplica).
+	\end{itemize} \\
+	\hline
+	\textbf{OBLIGACIONES} & \textbf{OBLIGACIONES} \\
+	\begin{itemize}
+		\item Conducta ética. Profesionalidad, integridad y discreción.
+		\item Presentación ecuánime, informando y verificando con veracidad.
+		\item Debido al cuidado profesional, con diligencia y buen juicio.
+	\end{itemize} &
+	\begin{itemize}
+		\item Suministrar al auditor información veraz, precisa e inequívoca.
+	\end{itemize} \\ % <--- ¡AQUÍ ESTABA EL ERROR '\end{G}', AHORA ESTÁ CORREGIDO!
+\hline
+\end{tabular}
+
+\end{document}
