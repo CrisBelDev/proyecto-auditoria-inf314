@@ -13,13 +13,43 @@
 \usepackage{fancyhdr}
 \usepackage{amsmath}
 \usepackage{newtxtext,newtxmath} % Fuente Times New Roman
+\usepackage{longtable} % Para tablas largas que ocupan más de una página
+\usepackage{array}
 
+% --- PAQUETES ADICIONALES PARA EVIDENCIA TÉCNICA ---
+\usepackage{listings} % Para código SQL
+\usepackage{xcolor}
+\usepackage{float}    % Para posicionar imágenes
+
+% Configuración de estilo para SQL
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2,
+	language=SQL
+}
+\lstset{style=mystyle}
 
 % --- CONFIGURACIÓN DE ENCABEZADOS Y PIES ---
 \pagestyle{fancy}
 \fancyhf{}
 \lhead{Auditoría de Base de Datos - FINDEPRO}
-\rhead{Avance del Proyecto}
+\rhead{Informe Final}
 \rfoot{Página \thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -29,7 +59,7 @@
 {\normalfont\fontsize{14}{16}\bfseries}{\thesection}{1em}{}
 
 \titleformat{\subsection}
-{\normalfont\fontsize{14}{16}\bfseries}{\thesubsection}{1em}{}
+{\normalfont\fontsize{12}{14}\bfseries}{\thesubsection}{1em}{}
 
 % --- INICIO DEL DOCUMENTO ---
 \begin{document}
@@ -49,15 +79,17 @@
 		
 		{\fontsize{16}{18}\selectfont\bfseries AUDITORÍA DE BASE DE DATOS \par}
 		\vspace{0.3cm}
-		{\fontsize{16}{18}\selectfont\bfseries INFORME DE AVANCE \par}
+		{\fontsize{16}{18}\selectfont\bfseries INFORME DE AUDITORÍA \par}
 		\vspace{0.3cm}
-		{\fontsize{16}{18}\selectfont\bfseries Sistema de Gestión FINDEPRO \par}
+		{\fontsize{14}{16}\selectfont\bfseries Validación de Integridad del Sistema Integrado de Cartera (SIC) \par}
+		\vspace{0.2cm}
+		{\fontsize{14}{16}\selectfont\bfseries Entidad: FINDEPRO IFD \par}
 		
 		\vspace{2.5cm}
 		
-		{\fontsize{16}{18}\selectfont\bfseries Integrantes: \par}
+		{\fontsize{14}{16}\selectfont\bfseries Equipo Auditor: \par}
 		\vspace{0.2cm}
-		{\fontsize{16}{18}\selectfont
+		{\fontsize{12}{14}\selectfont
 			Cristian Abel Mamani Mamani \par
 			Carmen Reyna Candia Suñagua \par
 			Gonzalo Rafael Esprella Coaquira \par
@@ -66,14 +98,14 @@
 			Greis Estefani Gonzales Chávez \par
 		}
 		
-		\vspace{1cm}
+		\vspace{1.5cm}
 		
-		{\fontsize{16}{18}\selectfont\bfseries Asignatura: Auditoría Informática (INF-314) \par}
-		{\fontsize{16}{18}\selectfont\bfseries Docente: M. Sc. Miguel Cotaña Mier \par}
+		{\fontsize{12}{14}\selectfont\bfseries Asignatura: Auditoría Informática (INF-314) \par}
+		{\fontsize{12}{14}\selectfont\bfseries Docente: M. Sc. Miguel Cotaña Mier \par}
 		
 		\vfill
 		
-		{\fontsize{16}{18}\selectfont La Paz - Bolivia \\ Octubre, 2025 \par}
+		{\fontsize{12}{14}\selectfont La Paz - Bolivia \\ Noviembre, 2025 \par}
 	\end{titlepage}
 	% --- FIN DE PORTADA ---
 	
@@ -85,198 +117,269 @@
 	
 	% --- SECCIONES DEL INFORME ---
 	
-	\section{Identificación de la Entidad y Sistema a Auditar}
+	\section{Introducción y Antecedentes}
 	
-	\subsection{La Entidad}
+	\subsection{Antecedentes de la Auditoría}
+	El presente trabajo de auditoría surge en respuesta al Memorándum \textbf{GT-2025-104} emitido por la Gerencia Nacional de Tecnología de FINDEPRO el 3 de octubre de 2025. Dicha solicitud, bajo la referencia \textit{"Entrega de Diccionario de Datos (Req. Auditoría)"}, tiene como objetivo atender el requerimiento de Auditoría Interna AUD-2025-003 referente a la \textbf{"Validación de Integridad de la Cartera"}.
+	
+	La entidad se encuentra en un proceso de transición tecnológica donde coexisten registros de cartera propia (denominada 'FINDEPRO') y cartera comprada/recalificada, lo cual ha generado discrepancias en los reportes operativos y contables debido a limitaciones conocidas del Core Bancario.
+	
+	\subsection{Justificación}
+	La integridad de los datos financieros es el activo más crítico para una Institución Financiera de Desarrollo (IFD). Errores en el cálculo de saldos, duplicidad de registros o inconsistencias en la mora pueden derivar en:
 	\begin{itemize}
-		\item \textbf{Nombre Principal:} FINDEPRO (Entidades Financieras de Desarrollo para Productores).
-		\item \textbf{Tipo de Entidad:} Institución Financiera de Desarrollo (IFD).
-		\item \textbf{Descripción Breve:} FINDEPRO se enfoca en proveer servicios financieros al sector productivo.
+		\item Sanciones regulatorias por parte de la ASFI.
+		\item Estados financieros erróneos que afecten la toma de decisiones.
+		\item Pérdida de confianza de los socios e inversionistas.
+	\end{itemize}
+	Por tanto, esta auditoría informática es fundamental para asegurar la confiabilidad de la información que reside en el servidor \texttt{SRV-DB-01}.
+	
+	\section{Marco Teórico y Normativo}
+	Para el desarrollo de la presente auditoría, se han considerado los siguientes marcos de referencia, estándares internacionales y normativa legal vigente en el Estado Plurinacional de Bolivia.
+	
+	\subsection{Marco Teórico Conceptual}
+	
+	\subsubsection{Auditoría de Base de Datos}
+	Se define como el proceso sistemático, independiente y documentado para obtener evidencias y evaluarlas objetivamente con el fin de determinar en qué medida se cumplen los criterios de auditoría relacionados con la seguridad, integridad, disponibilidad y confidencialidad de los datos gestionados por un Sistema Gestor de Bases de Datos (SGBD).
+	
+	\subsubsection{Integridad de Datos}
+	Refiere a la exactitud y consistencia de los datos almacenados a lo largo de su ciclo de vida. En el contexto de bases de datos relacionales, la integridad se rige por las propiedades ACID:
+	\begin{itemize}
+		\item \textbf{Atomicidad:} Las transacciones son todo o nada.
+		\item \textbf{Consistencia:} La base de datos pasa de un estado válido a otro.
+		\item \textbf{Aislamiento:} Las transacciones concurrentes no interfieren entre sí.
+		\item \textbf{Durabilidad:} Los cambios confirmados son permanentes.
 	\end{itemize}
 	
-	\subsection{Sistema a Auditar}
+	\subsubsection{Técnicas de Auditoría Asistidas por Computador (CAATs)}
+	Son herramientas y técnicas que permiten al auditor utilizar la tecnología para realizar pruebas de auditoría. En este proyecto, se utilizan scripts SQL para realizar pruebas sustantivas de recálculo y validación de reglas de negocio sobre el total de la población de datos.
+	
+	\subsection{Marco Normativo y Estándares}
+	
+	\subsubsection{COBIT 2019 (Control Objectives for Information and Related Technologies)}
+	Se ha seleccionado el dominio \textbf{DSS (Entregar, Dar Servicio y Soporte)}, específicamente:
 	\begin{itemize}
-		\item \textbf{Nombre/Descripción:} Base de Datos del Sistema de Gestión.
-		\item \textbf{Propósito del Sistema (inferido):} Gestionar información de clientes/socios (datos personales, productivos), operaciones financieras (créditos, desembolsos), seguimiento de proyectos, y generación de reportes operativos y de transparencia.
-		\item \textbf{Tecnología de Base de Datos (a confirmar):} [Indicar si se conoce, ej. PostgreSQL, SQL Server, Oracle, MySQL].
+		\item \textbf{DSS06 - Gestionar los Controles de los Procesos de Negocio:} Este objetivo asegura que la información procesada es íntegra, completa y válida. Es el criterio principal para validar que los saldos de cartera no han sido alterados ni duplicados indebidamente.
 	\end{itemize}
 	
-	\section{Descripción General de Funcionalidades}
-	
+	\subsubsection{Norma ISO/IEC 25012: Calidad de Datos}
+	Esta norma define un modelo general de calidad de datos. Para esta auditoría, nos enfocamos en las características de:
 	\begin{itemize}
-		\item Registro y gestión de clientes/socios.
-		\item Administración de créditos y cartera (FINDEPRO).
-		\item Generación de informes financieros y de producción.
-		\item Gestión de usuarios y permisos dentro del sistema.
+		\item \textbf{Exactitud:} Grado en que los datos representan correctamente el verdadero valor del atributo (ej. saldos monetarios).
+		\item \textbf{Consistencia:} Ausencia de contradicciones en los datos (ej. coherencia entre saldo vigente y estado de mora).
 	\end{itemize}
 	
+	\subsubsection{Normativa Nacional (Bolivia)}
+	\begin{itemize}
+		\item \textbf{Recopilación de Normas para Servicios Financieros (RNSF) de la ASFI:} Específicamente el Libro 3, Título VII, Capítulo II sobre "Seguridad de la Información", que exige a las entidades financieras garantizar la integridad de sus bases de datos.
+		\item \textbf{Ley N° 164 General de Telecomunicaciones:} En lo referente a la validez jurídica de los datos digitales y documentos electrónicos.
+	\end{itemize}
 	
-	\section{Objetivos y Alcance de la Auditoría}
+	\section{Identificación de la Entidad y Entorno Tecnológico}
+	
+	\subsection{La Entidad: FINDEPRO IFD}
+	FINDEPRO es una entidad regulada enfocada en el sector productivo. Su infraestructura tecnológica soporta operaciones críticas de microcrédito, vivienda y consumo.
+	
+	\subsection{Descripción del Sistema Auditado}
+	El "Sistema Integrado de Cartera" (SIC) es el núcleo transaccional. La auditoría se centra en su backend.
+	
+	\subsubsection{Ficha Técnica de la Base de Datos}
+	\begin{itemize}
+		\item \textbf{SGBD:} Microsoft SQL Server 2016 Enterprise Edition.
+		\item \textbf{Servidor:} SRV-DB-01.
+		\item \textbf{Base de Datos:} FINDEPRO\_PROD.
+		\item \textbf{Esquema:} [dbo].
+		\item \textbf{Nivel de Acceso:} Lectura controlada para auditores externos.
+	\end{itemize}
+	
+	\subsubsection{Estructura del Diccionario de Datos (Tabla Maestra)}
+	Se ha relevado la estructura de la tabla principal \texttt{[Operaciones\_Cartera]}, objeto de las pruebas sustantivas:
+	
+	\begin{longtable}{|p{4cm}|p{3cm}|p{8cm}|}
+		\hline
+		\textbf{Campo} & \textbf{Tipo Dato} & \textbf{Descripción Técnica} \\
+		\hline
+		\endhead
+		NUMERO\_DOCUMENTO & varchar(20) & Identificador único del cliente (CI). \\
+		\hline
+		SIGLA\_ENTIDAD & varchar(20) & Discriminador de origen ('FINDEPRO' o 'FAAA'). \\
+		\hline
+		NUMERO\_OPERACION & varchar(30) & Llave primaria compuesta (Suc-Prod-Sub-Of-Correlativo). \\
+		\hline
+		TIPO\_OBLIGADO & varchar(5) & \textbf{Campo Crítico.} '1A' (Titular), '2' (Garante). \\
+		\hline
+		MONEDA & char(3) & 'MN' (Bolivianos), 'ME' (Dólares). \\
+		\hline
+		SALDO\_VIGENTE & decimal(18,2) & Capital no vencido. \\
+		\hline
+		SALDO\_VENCIDO & decimal(18,2) & Capital en mora administrativa ($<=90$ días). \\
+		\hline
+		SALDO\_EJECUCION & decimal(18,2) & Capital en mora judicial. \\
+		\hline
+		DIAS\_MORA & int & Días de atraso calculados al cierre. \\
+		\hline
+		CALIFICACION & char(1) & Categoría de riesgo (A, B, C, D, E, F, H). \\
+		\hline
+		\caption{Estructura de la tabla auditada (Fuente: Diccionario de Datos TI-DOC-2025-089)}
+	\end{longtable}
+	
+	\section{Objetivos y Alcance}
 	
 	\subsection{Objetivo General}
-	Evaluar integralmente la gestión, seguridad y rendimiento de la base de datos, identificando riesgos, verificando la efectividad de los controles implementados y proponiendo recomendaciones para fortalecer la protección de los datos y optimizar su uso, considerando las necesidades operativas de FINDEPRO.
+	Determinar la razonabilidad y confiabilidad de los saldos de cartera reportados por el sistema informático, validando la inexistencia de errores materiales debidos a duplicidad de registros o fallas en la migración de datos de la cartera 'FAAA'.
 	
 	\subsection{Objetivos Específicos}
 	\begin{itemize}
-		\item Evaluar la \textbf{seguridad de acceso} a la base de datos, incluyendo la gestión de usuarios, roles, permisos y políticas de autenticación.
-		
-		\item Verificar la \textbf{integridad y consistencia} de los datos almacenados, analizando la estructura del esquema, el uso de constraints y la calidad de los datos.
-		
-		\item Validar las medidas de \textbf{confidencialidad} aplicadas a datos sensibles, como el cifrado en reposo y en tránsito.
-		
-		\item Examinar los procedimientos de \textbf{respaldo y recuperación} (Backup \& Restore) para asegurar la disponibilidad de la información ante contingencias.
-		
-		\item Analizar los mecanismos de \textbf{auditoría y monitoreo} de la base de datos para garantizar la trazabilidad y detección de actividades anómalas.
-		
-		\item Evaluar el \textbf{rendimiento} general de la base de datos e identificar posibles cuellos de botella u optimizaciones en consultas críticas.
-		
-		\item Verificar el \textbf{cumplimiento} con políticas internas de FINDEPRO y normativas externas relevantes.
+		\item Verificar la consistencia entre los datos detallados y los reportes de control mayor (Contabilidad).
+		\item Identificar registros que incumplan las reglas de integridad relacional (ej. operaciones sin titular o con múltiples titulares activos).
+		\item Validar el cumplimiento de la lógica de negocio para la clasificación de la cartera (Vigente vs Vencida).
+		\item Evaluar la calidad de los datos no financieros migrados desde sistemas legados (Excel).
 	\end{itemize}
 	
-	\subsection{Alcance}
-	La auditoría se centrará exclusivamente en la base de datos principal que soportan el sistema, incluyendo:
-	\begin{itemize}
-		\item El servidor de base de datos (Configuración, versionamiento, parches).
-		\item El esquema de la base de datos (Tablas, vistas, funciones, procedimientos almacenados, triggers relacionados con FINDEPRO).
-		\item Los mecanismos de seguridad implementados (Roles, permisos, cifrado).
-		\item Los procesos de respaldo y recuperación documentados.
-		\item Los logs de auditoría y rendimiento disponibles.
-	\end{itemize}
-	No se incluye en el alcance la auditoría de la aplicación cliente, la infraestructura de red (más allá de la conexión a la BD) o la seguridad física del centro de datos, excepto en lo que impacte directamente a la base de datos.
+	\section{Metodología de Auditoría}
 	
-	\section{Objeto de la Auditoría} % Nueva sección
-	El objeto específico de esta auditoría es la \textbf{base de datos} del sistema. Esto incluye el análisis de su diseño lógico y físico, los controles de seguridad implementados a nivel del SGBD, los procedimientos de administración (backup, monitoreo, gestión de usuarios), la integridad de los datos almacenados y el cumplimiento de las políticas y normativas aplicables a la información gestionada por FINDEPRO.
+	La metodología empleada se basa en la ejecución de pruebas sustantivas mediante **Técnicas de Auditoría Asistidas por Computador (CAATs)**. El proceso se dividió en las siguientes fases:
 	
-	\section{Metodología y Criterios de Auditoría}
+	\subsection{Fase 1: Entendimiento y Relevamiento}
+	Se analizó el documento \textit{"Diccionario de Datos - Sistema Integrado de Cartera"} para comprender la semántica de los datos y las reglas de negocio implícitas, como la distinción de titulares y garantes.
 	
-	\subsection{Enfoque Metodológico}
-	Se aplicará un enfoque basado en riesgos, alineado con marcos de referencia internacionales como \textbf{COBIT 2019} (especialmente los dominios APO y DSS) e \textbf{ISO/IEC 27001/27002}. Se combinarán técnicas cualitativas (entrevistas, revisión documental) y cuantitativas (análisis de logs, ejecución de scripts SQL). Se adopta una perspectiva crítica orientada a la mejora continua.
-	
-	\subsection{Dominio COBIT Aplicado (Preliminar)}
-	Se tomará como referencia principal el dominio \textbf{DSS (Deliver, Service and Support)} de COBIT 2019, con énfasis en:
-	\begin{itemize}
-		\item \textbf{DSS05 Gestionar los Servicios de Seguridad:} Relevante para evaluar la protección de la información en la base de datos.
-		\item \textbf{DSS06 Gestionar los Controles del Proceso de Negocio:} Para asegurar que los controles de la base de datos soportan la integridad de los procesos de FINDEPRO.
-	\end{itemize}
-	Esto se complementará con controles específicos de ISO 27002.
-	
-	\subsection{Modalidad y Niveles de Investigación}
-	La auditoría será \textbf{mixta}, combinando:
-	\begin{itemize}
-		\item \textbf{Investigación Documental:} Análisis de políticas, manuales, diagramas, etc.
-		\item \textbf{Investigación de Campo:} Entrevistas, observación, pruebas técnicas directas sobre la BD (con acceso de lectura).
-	\end{itemize}
-	Se abordarán los niveles \textbf{Exploratorio} (identificación inicial), \textbf{Descriptivo} (documentación del estado actual) y \textbf{Explicativo} (análisis de causas y efectos).
-	
-	\subsection{Población y Muestra}
-	\begin{itemize}
-		\item \textbf{Población:} Componentes de la BD, procesos dependientes (registro de clientes, créditos, etc.), usuarios (DBAs, desarrolladores, usuarios finales clave).
-		\item \textbf{Muestra:} Se seleccionarán muestras representativas de tablas críticas, configuraciones de seguridad, logs de auditoría y usuarios para un análisis detallado. La selección será basada en riesgos.
-	\end{itemize}
-	
-	\subsection{Técnicas e Instrumentos (Planeados)}
-	\begin{itemize}
-		\item \textbf{Revisión Documental:} Checklists basados en COBIT/ISO.
-		\item \textbf{Entrevistas:} Cuestionarios estructurados para DBAs y personal relevante.
-		\item \textbf{Observación y Pruebas Técnicas:} Scripts SQL para verificar permisos, constraints, configuraciones; revisión de logs; uso de herramientas de administración del SGBD.
-	\end{itemize}
-	
-	\subsection{Procesamiento de la Información}
-	Los datos recopilados serán clasificados, analizados (descriptiva y críticamente) y contrastados con los criterios de auditoría para identificar hallazgos, determinar causas raíz y formular recomendaciones.
-	\subsection{Normativa Aplicable}
-	La auditoría tomará como referencia principal las siguientes normativas y marcos:
-	
-	\begin{itemize}
-		\item \textbf{ISO/IEC 27001:2022 Gestión de la Seguridad de la Información.}
-		\item \textbf{ISO/IEC 27002:2022 Controles de Seguridad de la Información.}
-		\item \textbf{COBIT 2019 - Gobierno y Gestión de Tecnologías de Información.}
-		\item \textbf{ISO 9001:2015 - Gestión de la Calidad.}
-		\item \textbf{ISO/IEC 20000-1:2018 Gestión de Servicios de TI.}
-		\item \textbf{Ley N° 164 General de Telecomunicaciones, Tecnologías de Información y Comunicación (Bolivia):} Potencialmente aplicable a la protección de datos. (Se debe verificar si existe una ley específica de protección de datos más reciente o si se aplica esta de forma supletoria).
-		\item \textbf{Regulaciones de la ASFI (Autoridad de Supervisión del Sistema Financiero):} Aplicables a FINDEPRO como IFD, especialmente en cuanto a seguridad de la información y continuidad del negocio.
-		\item \textbf{Políticas Internas de FINDEPRO.}
-		\item \textbf{NIST Cybersecurity Framework (Referencia complementaria).}
-	\end{itemize}
-	
-	
-	\subsection{Criterios Específicos de Auditoría}
-	Los criterios concretos contra los cuales se evaluará la base de datos incluyen:
-	\begin{itemize}
-		\item Políticas internas de seguridad de FINDEPRO.
-		\item Buenas prácticas para el SGBD específico (ej. CIS Benchmarks).
-		\item Controles relevantes de ISO/IEC 27002 y COBIT DSS05/DSS06.
-		\item Requerimientos normativos aplicables (ASFI, Protección de Datos).
-	\end{itemize}
-	
-	\section{Estado Actual del Proyecto}
-	
-	A la fecha, el equipo auditor ha completado las siguientes actividades:
-	\begin{itemize}
-		\item \textbf{Fase de Planificación Concluida:} Se han definido y documentado los objetivos, el alcance detallado, la metodología, los criterios de auditoría y el cronograma general del proyecto.
-		\item \textbf{Solicitud Formal de Recursos:} Se ha enviado la comunicación oficial a FINDEPRO solicitando:
-		\begin{itemize}
-			\item Acceso de solo lectura a la base de datos del sistema.
-			\item Documentación técnica relevante (Modelo E-R, Diccionario de Datos, Políticas de Seguridad y Backup).
-			\item Disponibilidad para entrevistas con el personal técnico responsable (DBA, Equipo de Desarrollo/Soporte).
-		\end{itemize}
-		\textit{Estado actual: Pendiente de recepción de credenciales y documentación.}
-		\item \textbf{Preparación de Instrumentos:} Se han elaborado cuestionarios iniciales y checklists basados en COBIT/ISO y regulaciones ASFI (preliminar). Se han preparado scripts SQL genéricos para verificaciones iniciales.
-		\item \textbf{Matriz de Riesgos Preliminar:} Se ha desarrollado una matriz identificando riesgos potenciales específicos para el contexto financiero/productivo.
-	\end{itemize}
-	
-	\section{Plan de Pruebas Detallado}
-	% --- (Esta sección se mantiene igual que la versión anterior) ---
-	\subsection{Gestión de Accesos y Seguridad}
-	\begin{itemize}
-		\item Inventario y análisis de cuentas de usuario y roles definidos en la BD.
-		\item Verificación de la asignación del principio de mínimo privilegio.
-		\item Revisión de la configuración de autenticación y políticas de contraseñas.
-		\item Análisis de permisos sobre objetos críticos.
-	\end{itemize}
-	\subsection{Integridad y Consistencia de Datos}
-	\begin{itemize}
-		\item Comprobación de claves primarias y foráneas.
-		\item Verificación de constraints (UNIQUE, CHECK).
-		\item Búsqueda de registros huérfanos o inconsistentes.
-		\item Análisis de la estructura de normalización.
-	\end{itemize}
-	\subsection{Confidencialidad de Datos}
-	\begin{itemize}
-		\item Identificación de columnas con datos sensibles.
-		\item Verificación de cifrado en reposo y en tránsito.
-	\end{itemize}
-	\subsection{Disponibilidad y Recuperación}
-	\begin{itemize}
-		\item Revisión de configuración de backups.
-		\item Verificación de planes de restauración.
-	\end{itemize}
-	\subsection{Auditoría y Monitoreo}
-	\begin{itemize}
-		\item Comprobación de habilitación de logs de auditoría.
-		\item Revisión de configuración de monitoreo de rendimiento.
-	\end{itemize}
-	
-	\section{Riesgos Anticipados y Áreas de Enfoque}
-	% --- (Esta sección se mantiene igual que la versión anterior) ---
-	\begin{itemize}
-		\item \textbf{Gestión de Privilegios:} Riesgo de permisos excesivos.
-		\item \textbf{Protección de Datos Sensibles:} Posible almacenamiento en texto plano de datos de socios/clientes.
-		\item \textbf{Consistencia de Datos:} Falta de integridad referencial.
-		\item \textbf{Auditoría de Cambios:} Insuficiente trazabilidad.
-	\end{itemize}
-	
-	\section{Próximos Pasos}
-	% --- (Esta sección se mantiene igual que la versión anterior) ---
+	\subsection{Fase 2: Adquisición de Datos (ETL)}
+	Se procedió a la extracción de dos conjuntos de datos planos (CSV) del servidor de producción:
 	\begin{enumerate}
-		\item Seguimiento activo a la solicitud de accesos y documentación. \textbf{Dependencia crítica.}
-		\item Reconocimiento detallado del esquema y configuración de la BD.
-		\item Ejecución de pruebas planificadas (Gestión de Accesos primero).
-		\item Documentación rigurosa de evidencia.
-		\item Realización de entrevistas técnicas.
-		\item Análisis de evidencia y redacción de hallazgos preliminares.
+		\item \texttt{Datos Origen.csv}: Cartera nativa.
+		\item \texttt{OrigenRecalificado.csv}: Cartera migrada.
 	\end{enumerate}
-	$$ /int f(x) dx $$
+	Estos datos fueron importados a un entorno de pruebas SQL controlado por el equipo auditor para no afectar el rendimiento del servidor de producción.
 	
+	\subsection{Fase 3: Ejecución de Scripts de Validación}
+	Se diseñaron y ejecutaron scripts SQL (\textit{Structured Query Language}) para:
+	\begin{itemize}
+		\item Unificar las fuentes de datos.
+		\item Filtrar registros duplicados lógicos (Garantes).
+		\item Recalcular sumatorias por moneda y estado.
+	\end{itemize}
 	
+	\section{Ejecución y Hallazgos de Auditoría}
+	
+	En esta sección se detallan las pruebas realizadas, la evidencia obtenida y los hallazgos detectados, estructurados según las normas de auditoría.
+	
+	\subsection{Prueba Sustantiva 1: Conciliación de Saldos Globales}
+	
+	\textbf{Objetivo:} Verificar la exactitud matemática de los saldos de cartera.
+	
+	\textbf{Procedimiento:}
+	Se ejecutó el script SQL \texttt{1\_4962977436586215840.sql} sobre la tabla unificada. La lógica aplicada fue sumar los campos \texttt{SALDO\_VIGENTE}, \texttt{SALDO\_VENCIDO} y \texttt{SALDO\_EJECUCION}, agrupando por \texttt{MONEDA}, y aplicando estrictamente el filtro \texttt{WHERE TIPO\_OBLIGADO = '1A'}.
+	
+	\begin{lstlisting}[caption=Extracto del Script de Auditoría]
+		-- Validacion de Totales por Moneda (Extracto)
+		SELECT 
+		MONEDA,
+		SUM(SALDO_VIGENTE + SALDO_VENCIDO + SALDO_EJECUCION) as Total_Cartera
+		FROM Operaciones_Unificadas
+		WHERE TIPO_OBLIGADO = '1A' -- Filtro critico para evitar duplicidad
+		GROUP BY MONEDA;
+	\end{lstlisting}
+	
+	\textbf{Resultados del Recálculo:}
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{lrrr}
+			\toprule
+			\textbf{Moneda} & \textbf{Saldo Sistema (Bs)} & \textbf{Saldo Control (Bs)} & \textbf{Diferencia} \\
+			\midrule
+			MN (Nacional)   & 11,987,441.48 & 11,987,441.48 & 0.00 \\
+			ME (Extranjera) & 660,611.00    & 660,611.00    & 0.00 \\
+			\midrule
+			\textbf{Total}  & \textbf{12,648,052.48} & \textbf{12,648,052.48} & \textbf{0.00} \\
+			\bottomrule
+		\end{tabular}
+		\caption{Matriz de Conciliación de Saldos}
+	\end{table}
+	
+	\textbf{Conclusión de la Prueba:} Satisfactoria. No existen diferencias materiales. La integridad matemática de los saldos se mantiene intacta tras la migración.
+	
+	\subsection{Hallazgo 1: Riesgo de Integridad por Diseño Desnormalizado (Duplicidad)}
+	
+	\textbf{Condición:} 
+	La tabla \texttt{Operaciones\_Cartera} presenta un diseño desnormalizado donde se almacena un registro por cada participante de la operación (Titular, Garante, Codeudor). Los campos de importes (\texttt{SALDO\_VIGENTE}, etc.) se repiten idénticos en cada registro asociado a la misma \texttt{NUMERO\_OPERACION}.
+	
+	\textbf{Criterio:} 
+	\textit{COBIT 2019 DSS06.03 - Gestión de Roles y Responsabilidades:} El sistema debe garantizar que la información presentada a los usuarios minimice el riesgo de interpretaciones erróneas. 
+	\textit{ISO/IEC 25012 - Característica de Eficiencia:} El almacenamiento redundante innecesario afecta el rendimiento y la consistencia.
+	
+	\textbf{Causa:} 
+	Limitación técnica del Core Bancario legado que exporta vistas planas en lugar de relacionales para facilitar la lectura en Excel, sin considerar el impacto en bases de datos SQL.
+	
+	\textbf{Efecto (Riesgo):} 
+	Alto. Si un analista de riesgos o un auditor externo realiza una consulta sumatoria (\texttt{SUM(SALDO)}) sin conocer la regla de negocio de filtrar por \texttt{'1A'}, el saldo de la deuda se duplicará o triplicará, generando informes financieros falsos y provisiones erróneas.
+	
+	\textbf{Evidencia Visual:}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\textwidth]{modelorelacional.jpg}
+		\caption{Evidencia de registros duplicados para la misma operación (Titular y Garante)}
+	\end{figure}
+	
+	\textbf{Recomendación:}
+	\begin{enumerate}
+		\item Crear Vistas (Views) de base de datos específicas para reportes gerenciales que filtren implícitamente \texttt{WHERE TIPO\_OBLIGADO = '1A'}.
+		\item Restringir el acceso directo a la tabla base \texttt{Operaciones\_Cartera} y conceder permisos solo sobre las Vistas depuradas.
+	\end{enumerate}
+	
+	\subsection{Hallazgo 2: Baja Calidad de Datos en Campos Descriptivos}
+	
+	\textbf{Condición:} 
+	Se identificaron inconsistencias de formato en la columna \texttt{ACTIVIDAD ECON}. Varios registros presentan códigos CAEDEC con formato decimal (ej. "1111.0") o caracteres no numéricos, provenientes de la conversión automática de tipos de datos durante la importación desde Excel.
+	
+	\textbf{Criterio:} 
+	\textit{ISO/IEC 25012 - Exactitud Sintáctica:} Los datos deben cumplir con el formato definido para su dominio.
+	
+	\textbf{Causa:} 
+	Falta de validación de tipos de datos en el proceso ETL (Extracción, Transformación y Carga) al migrar desde hojas de cálculo.
+	
+	\textbf{Efecto (Riesgo):} 
+	Medio. Aunque no afecta los saldos financieros, impide la correcta segmentación de la cartera por sector económico, lo cual es un requerimiento obligatorio para los reportes enviados a la ASFI.
+	
+	\textbf{Recomendación:}
+	Ejecutar un script de limpieza de datos (\textit{Data Cleansing}) para estandarizar los códigos CAEDEC a formato texto de 5 dígitos.
+	
+	\section{Evaluación de Riesgos (Matriz)}
+	
+	Basado en los hallazgos, se presenta la matriz de riesgos residuales:
+	
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{|m{4cm}|c|c|c|m{3cm}|}
+			\hline
+			\textbf{Riesgo Identificado} & \textbf{Probabilidad} & \textbf{Impacto} & \textbf{Nivel} & \textbf{Acción} \\
+			\hline
+			Sobreestimación de cartera por duplicidad de garantes & Alta & Alto & \textbf{Crítico} & Implementar Vistas SQL inmediatas. \\
+			\hline
+			Errores en reportes sectoriales por códigos CAEDEC & Media & Medio & \textbf{Moderado} & Depuración de datos planificada. \\
+			\hline
+			Diferencias en conciliación contable & Baja & Alto & \textbf{Bajo} & Riesgo mitigado (Prueba 1 exitosa). \\
+			\hline
+		\end{tabular}
+		\caption{Matriz de Riesgos de la Base de Datos}
+	\end{table}
+	
+	\section{Conclusiones Generales}
+	
+	El equipo de auditoría de la Universidad Mayor de San Andrés concluye que:
+	
+	\begin{enumerate}
+		\item La base de datos \textbf{es íntegra en términos financieros}. Las pruebas de recálculo demostraron una coincidencia del 100\% con los saldos de control (Bs 12.6M en total).
+		\item La migración de la cartera 'FAAA' se ha realizado correctamente a nivel de saldos, aunque hereda problemas de calidad de datos (formato) de los sistemas previos.
+		\item Existe una debilidad de control interno significativa en la estructura de la tabla, que permite la lectura de datos duplicados si no se tiene conocimiento experto del modelo de datos.
+	\end{enumerate}
+	
+	Se emite una opinión de \textbf{SALVEDAD SUJETA A MEJORAS}, recomendando la implementación inmediata de las vistas de base de datos sugeridas para mitigar el riesgo operativo.
+	
+	\vspace{2cm}
+	\begin{center}
+		\rule{8cm}{0.4pt} \\
+		\textbf{Cristian Abel Mamani Mamani} \\
+		Estudiante de Informática - UMSA
+	\end{center}
 	
 \end{document}

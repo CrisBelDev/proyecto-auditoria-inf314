@@ -1,0 +1,401 @@
+\documentclass[11pt, letterpaper]{article}
+
+% --- PAQUETES ---
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{longtable}
+\usepackage{enumitem}
+\usepackage{helvet}
+\usepackage{tikz} 
+\usetikzlibrary{trees, shadows, positioning, shapes.geometric, arrows.meta}
+
+% --- CONFIGURACIÓN DE PÁGINA ---
+\geometry{left=2.5cm, right=2.5cm, top=3cm, bottom=3cm, headheight=50pt, footskip=1.5cm}
+\renewcommand{\familydefault}{\sfdefault} 
+
+% --- DEFINICIÓN DE COLORES ---
+\definecolor{corporateblue}{RGB}{0, 51, 102}
+\definecolor{tablegray}{RGB}{245, 245, 245}
+\definecolor{headergray}{RGB}{225, 225, 225}
+
+% --- CONFIGURACIÓN DE ENCABEZADOS Y PIES ---
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{
+	\begin{tabular}{l}
+		\textbf{\textcolor{corporateblue}{FINDEPRO IFD}} \\
+		\scriptsize Gerencia Nacional de Tecnología
+	\end{tabular}
+}
+\rhead{
+	\begin{tabular}{r}
+		\textbf{\scriptsize Manual de Organización y Funciones} \\
+		\scriptsize Código: MOF-TI-V02
+	\end{tabular}
+}
+\rfoot{\footnotesize \textit{Uso Interno - Copia Controlada} \hfill Página \thepage}
+\renewcommand{\headrulewidth}{1.5pt}
+
+% --- ESTILO DE TÍTULOS ---
+\titleformat{\section}
+{\color{corporateblue}\normalfont\Large\bfseries\uppercase}{\thesection}{1em}{}
+\titleformat{\subsection}
+{\color{corporateblue}\normalfont\large\bfseries}{\thesubsection}{1em}{}
+
+% --- COMANDO PARA FICHAS DE CARGO (MODIFICADO: SIN NEWPAGE AL INICIO) ---
+\newcommand{\fichacargo}[9]{
+	\vspace{0.5cm} % Espacio antes de la tabla en lugar de página nueva
+	\renewcommand{\arraystretch}{1.5} 
+	\noindent
+	\begin{longtable}{|p{16cm}|}
+		\hline
+		\rowcolor{corporateblue} \textcolor{white}{\textbf{\large DESCRIPCIÓN DE CARGO}} \\
+		\hline
+		\rowcolor{headergray} \textbf{1. IDENTIFICACIÓN} \\
+		\hline
+		\textbf{Denominación del Cargo:} #1 \\
+		\textbf{Código:} #2 \\
+		\textbf{Unidad Organizacional:} #3 \\
+		\textbf{Dependencia Jerárquica:} #4 \\
+		\textbf{Supervisión Directa:} #5 \\
+		\hline
+		\rowcolor{headergray} \textbf{2. PROPÓSITO DEL CARGO} \\
+		\hline
+		#6 \\
+		\hline
+		\rowcolor{headergray} \textbf{3. FUNCIONES Y RESPONSABILIDADES PRINCIPALES} \\
+		\hline
+		\begin{minipage}[t]{15.5cm}
+			\vspace{0.2cm}
+			#7
+			\vspace{0.2cm}
+		\end{minipage} \\
+		\hline
+		\rowcolor{headergray} \textbf{4. RELACIONES DE COORDINACIÓN} \\
+		\hline
+		\textbf{Internas:} #8 \\
+		\textbf{Externas:} Proveedores de TI, Consultores, ASFI, Auditoría Externa. \\
+		\hline
+		\rowcolor{headergray} \textbf{5. PERFIL REQUERIDO} \\
+		\hline
+		\begin{minipage}[t]{15.5cm}
+			\vspace{0.2cm}
+			#9
+			\vspace{0.2cm}
+		\end{minipage} \\
+		\hline
+	\end{longtable}
+}
+
+\begin{document}
+	
+	% --- PORTADA ---
+	\begin{titlepage}
+		\centering
+		\vspace*{1cm}
+		\textbf{\Huge FINDEPRO IFD}\\[0.5cm]
+		\textbf{\Large INSTITUCIÓN FINANCIERA DE DESARROLLO}\\[3cm]
+		
+		\colorbox{corporateblue}{\parbox{14cm}{\centering \vspace{1cm} \textcolor{white}{\textbf{\Huge MANUAL DE ORGANIZACIÓN Y FUNCIONES (MOF)}} \vspace{1cm}}}\\[2cm]
+		
+		{\Large \textbf{GERENCIA NACIONAL DE TECNOLOGÍA}}\\[0.5cm]
+		{\large Versión Aprobada 2.0}\\[3cm]
+		
+		\renewcommand{\arraystretch}{1.5}
+		\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+			\hline
+			\textbf{Elaborado por:} & \textbf{Revisado por:} & \textbf{Aprobado por:} \\
+			& & \\
+			\vspace{1cm} & \vspace{1cm} & \vspace{1cm} \\
+			Lic. Analista O\&M & Gerente Nal. Riesgos & Directorio General \\
+			\hline
+		\end{tabular}
+		
+		\vfill
+		\textbf{La Paz - Bolivia} \\
+		\textbf{Gestión 2025}
+	\end{titlepage}
+	
+	\newpage
+	
+	% --- RESOLUCIÓN ---
+	\section*{Resolución Administrativa}
+	\addcontentsline{toc}{section}{Resolución de Aprobación}
+	
+	\noindent \textbf{RESOLUCIÓN DE DIRECTORIO N° 005/2025}
+	
+	\noindent La Paz, 15 de Enero de 2025
+	
+	\noindent \textbf{VISTOS:}
+	
+	El crecimiento operativo de la Institución Financiera de Desarrollo FINDEPRO; los requerimientos establecidos en la Recopilación de Normas para Servicios Financieros (RNSF) de la ASFI referentes a la gestión de riesgos tecnológicos; y el informe técnico TI-INF-2024-098 presentado por la Gerencia General.
+	
+	\noindent \textbf{CONSIDERANDO:}
+	
+	Que, es imprescindible fortalecer la estructura de la Gerencia Nacional de Tecnología para garantizar la integridad de los datos ante la migración de nuevas carteras de crédito.
+	
+	Que, se requiere segregar funciones críticas entre el desarrollo de software, la administración de infraestructura y la gestión de bases de datos.
+	
+	\noindent \textbf{POR TANTO:}
+	
+	El Directorio de FINDEPRO IFD, en uso de sus atribuciones estatutarias:
+	
+	\noindent \textbf{RESUELVE:}
+	
+	\textbf{PRIMERO.-} Aprobar la nueva estructura orgánica y el Manual de Organización y Funciones (MOF) de la Gerencia Nacional de Tecnología.
+	
+	\textbf{SEGUNDO.-} Instruir a la Unidad de Talento Humano la difusión del presente documento a todo el personal involucrado.
+	
+	\vspace{3cm}
+	\begin{center}
+		\begin{tabular}{ccc}
+			\rule{6cm}{0.5pt} & \hspace{1cm} & \rule{6cm}{0.5pt} \\
+			Presidente del Directorio & & Secretario de Directorio
+		\end{tabular}
+	\end{center}
+	
+	\newpage
+	
+	% --- CAPÍTULO 1 ---
+	\section{Marco Organizacional}
+	
+	\subsection{Misión del Área}
+	Proveer soluciones tecnológicas innovadoras, seguras y eficientes que soporten las operaciones financieras de FINDEPRO IFD, garantizando la disponibilidad de los servicios y la integridad de la información para la toma de decisiones estratégicas.
+	
+	\subsection{Organigrama Funcional}
+	La estructura organizacional ha sido diseñada para cumplir con los principios de segregación de funciones exigidos por la normativa ASFI. A continuación se presenta la estructura vigente:
+	
+	\vspace{0.5cm}
+	
+	% --- INICIO ORGANIGRAMA TIKZ (AJUSTADO PARA NO DESBORDARSE) ---
+	\begin{figure}[h]
+		\centering
+		% Resizebox fuerza a que el gráfico entre en el ancho del texto (textwidth)
+		\resizebox{\textwidth}{!}{
+			\begin{tikzpicture}[
+				node distance=1.2cm,
+				% Reducimos distancias internas por si acaso, aunque resizebox lo arregla
+				level 1/.style={sibling distance=5.5cm},
+				level 2/.style={sibling distance=3.5cm},
+				level distance=2.5cm,
+				% Estilo de las cajas
+				box/.style={
+					rectangle,
+					draw=corporateblue,
+					very thick,
+					fill=white,
+					text width=4cm,
+					text centered,
+					rounded corners=3pt,
+					minimum height=1.5cm,
+					drop shadow,
+					font=\footnotesize\bfseries\sffamily
+				},
+				% Estilo de caja superior
+				topbox/.style={
+					box,
+					fill=corporateblue,
+					text=white
+				},
+				% Estilo de líneas
+				line/.style={
+					draw, 
+					very thick, 
+					-Latex, 
+					corporateblue
+				}
+				]
+				
+				% Nodos
+				\node[topbox, text width=6cm] (gerencia) {GERENCIA NACIONAL DE TECNOLOGÍA \\ (Ing. Carlos Méndez)};
+				
+				% Nivel 2: Jefaturas
+				\node[box, below left=1.5cm and 2.5cm of gerencia] (desarrollo) {JEFATURA DE DESARROLLO \\ DE SOFTWARE};
+				\node[box, below=1.5cm of gerencia] (dba) {ÁREA DE BASE DE DATOS \\ (DBA) \\ (J. Rodriguez)};
+				\node[box, below right=1.5cm and 2.5cm of gerencia] (infra) {JEFATURA DE INFRAESTRUCTURA};
+				
+				% Nodos Staff (Seguridad y QA)
+				\node[box, left=0.5cm of desarrollo, text width=2.5cm, fill=gray!10] (seguridad) {SEGURIDAD DE LA INFORMACIÓN (CISO)};
+				\node[box, right=0.5cm of infra, text width=2.5cm, fill=gray!10] (qa) {CALIDAD Y PROCESOS (QA)};
+				
+				% Nivel 3: Operativo
+				\node[box, below=1cm of desarrollo, text width=3.5cm] (analistas) {Analistas Programadores};
+				\node[box, below=1cm of infra, text width=3.5cm] (soporte) {Mesa de Ayuda y Soporte};
+				
+				% Conexiones
+				\path[line] (gerencia) -- (desarrollo);
+				\path[line] (gerencia) -- (dba);
+				\path[line] (gerencia) -- (infra);
+				
+				% Conexiones operativas
+				\path[line] (desarrollo) -- (analistas);
+				\path[line] (infra) -- (soporte);
+				
+				% Conexiones Staff (Líneas punteadas)
+				\draw[dashed, thick, corporateblue] (gerencia.west) -| (seguridad.north);
+				\draw[dashed, thick, corporateblue] (gerencia.east) -| (qa.north);
+				
+			\end{tikzpicture}
+		} % Fin resizebox
+		\caption{Estructura Orgánica - Gerencia Nacional de Tecnología}
+	\end{figure}
+	% --- FIN ORGANIGRAMA TIKZ ---
+	
+	\vspace{0.5cm}
+	\noindent \small \textbf{Nota:} Las unidades de Seguridad de la Información y Calidad (QA) poseen reporte funcional a la Gerencia de Tecnología pero mantienen independencia de criterio reportando matricialmente al Comité de Riesgos.
+	
+	\newpage
+	\section{Descripción de Cargos}
+	% AQUI EMPIEZA LA PRIMERA FICHA SIN PAGEBREAK PREVIO
+	
+	% --- CARGO 1: GERENTE TI ---
+	\fichacargo{Gerente Nacional de Tecnología}
+	{TI-GER-001}
+	{Gerencia Nacional de Tecnología}
+	{Gerencia General}
+	{Jefe de Desarrollo, DBA Senior, Jefe de Infraestructura, Oficial de Seguridad}
+	{Planificar, dirigir y controlar la gestión integral de las Tecnologías de la Información y Comunicación (TIC), alineando la estrategia tecnológica con los objetivos comerciales de la IFD y asegurando el cumplimiento de la normativa regulatoria vigente.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item Dirigir la elaboración y ejecución del Plan Estratégico de Tecnología (PETI).
+			\item Aprobar las políticas y procedimientos para la gestión de cambios, incidentes y problemas en el entorno productivo.
+			\item Autorizar pases a producción de nuevos desarrollos o modificaciones en el Core Bancario.
+			\item Supervisar la gestión presupuestaria del área (CAPEX/OPEX).
+			\item Representar a la entidad ante la ASFI en inspecciones tecnológicas.
+		\end{itemize}
+	}
+	{Gerencias Nacionales (Operaciones, Riesgos, Finanzas, Auditoría).}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Formación:} Maestría en Dirección de TI o Finanzas.
+			\item \textbf{Experiencia:} 7 años en cargos directivos en el sector financiero.
+			\item \textbf{Certificaciones:} CISM, CGEIT (Deseable).
+		\end{itemize}
+	}
+	
+	% --- CARGO 2: DBA ---
+	\newpage % SALTO DE PÁGINA MANUAL PARA LA SIGUIENTE FICHA
+	\fichacargo{Administrador de Base de Datos (DBA) Senior}
+	{TI-DBA-001}
+	{Área de Administración de Base de Datos}
+	{Gerencia Nacional de Tecnología}
+	{Asistente de Base de Datos}
+	{Garantizar la disponibilidad, integridad y seguridad de las bases de datos institucionales (SQL Server), administrando el ciclo de vida de los datos desde su diseño hasta su archivo histórico.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Administración:} Instalar, configurar y mantener las instancias de base de datos en servidores de producción y contingencia.
+			\item \textbf{Integridad:} Definir e implementar reglas de integridad referencial y restricciones (constraints) para asegurar la consistencia de los datos financieros.
+			\item \textbf{Seguridad:} Gestionar usuarios, roles y privilegios. Realizar auditorías periódicas de accesos y trazas de base de datos.
+			\item \textbf{Mantenimiento:} Ejecutar planes de mantenimiento (reindexación, actualización de estadísticas) para optimizar el rendimiento (Tuning).
+			\item \textbf{Respaldo:} Ejecutar y monitorear la política de backups (Full, Diferencial, Transaccional) y realizar pruebas de restauración semestrales.
+			\item \textbf{Soporte:} Proveer scripts y vistas personalizadas para requerimientos de Auditoría y Entes Reguladores.
+		\end{itemize}
+	}
+	{Desarrollo, Infraestructura, Oficial de Seguridad.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Formación:} Licenciatura en Informática o Sistemas.
+			\item \textbf{Experiencia:} 4 años como DBA en entornos SQL Server.
+			\item \textbf{Conocimientos:} T-SQL Avanzado, SSIS, SSRS, Alta Disponibilidad (AlwaysOn).
+		\end{itemize}
+	}
+	
+	% --- CARGO 3: JEFE DESARROLLO ---
+	\newpage
+	\fichacargo{Jefe de Desarrollo de Software}
+	{TI-DEV-001}
+	{Jefatura de Desarrollo}
+	{Gerencia Nacional de Tecnología}
+	{Analistas Programadores, QA (Quality Assurance)}
+	{Liderar el equipo de ingeniería de software para el mantenimiento y evolución del Sistema Integrado de Cartera (SIC), asegurando la calidad del código y el cumplimiento de los requerimientos del negocio.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item Planificar los sprints de desarrollo y asignar tareas al equipo de programación.
+			\item Supervisar el ciclo de vida de desarrollo seguro (SDLC).
+			\item Coordinar las pruebas de certificación de usuario (UAT) con las áreas de negocio.
+			\item Gestionar el versionamiento del código fuente (Git) y los despliegues en ambientes no productivos.
+		\end{itemize}
+	}
+	{Jefes de Producto, Riesgos, Usuarios Líderes.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Formación:} Ingeniería de Sistemas o Software.
+			\item \textbf{Experiencia:} 5 años en desarrollo de software (.NET/Java).
+			\item \textbf{Conocimientos:} Scrum, DevOps, Arquitectura de Microservicios.
+		\end{itemize}
+	}
+	
+	% --- CARGO 4: JEFE INFRAESTRUCTURA ---
+	\newpage
+	\fichacargo{Jefe de Infraestructura y Comunicaciones}
+	{TI-INF-001}
+	{Jefatura de Infraestructura}
+	{Gerencia Nacional de Tecnología}
+	{Administrador de Redes, Soporte Técnico}
+	{Asegurar la operatividad de la plataforma tecnológica (Data Center, Servidores, Redes y Comunicaciones), garantizando niveles de servicio adecuados para la operación de la entidad.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item Administrar el Centro de Datos principal y alterno.
+			\item Gestionar la virtualización de servidores y sistemas operativos (Windows Server/Linux).
+			\item Monitorear la disponibilidad de enlaces de comunicación entre sucursales.
+			\item Gestionar el inventario de activos tecnológicos de hardware y licencias.
+		\end{itemize}
+	}
+	{Proveedores de ISP, Mantenimiento.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Formación:} Ingeniería Electrónica o Telecomunicaciones.
+			\item \textbf{Experiencia:} 4 años en administración de infraestructura crítica.
+			\item \textbf{Conocimientos:} VMware, Cisco CCNA, Windows Server.
+		\end{itemize}
+	}
+	
+	% --- CARGO 5: ANALISTA DE SOPORTE ---
+	\newpage
+	\fichacargo{Analista de Soporte y Mesa de Ayuda}
+	{TI-SOP-001}
+	{Jefatura de Infraestructura}
+	{Jefe de Infraestructura}
+	{N/A}
+	{Brindar asistencia técnica de primer nivel a los usuarios de la entidad, resolviendo incidentes relacionados con hardware, software ofimático y acceso a sistemas.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item Atender y registrar los requerimientos de usuarios en el sistema de Mesa de Ayuda.
+			\item Realizar mantenimiento preventivo y correctivo de equipos de computación.
+			\item Gestionar las altas, bajas y modificaciones de usuarios en el Directorio Activo, previa autorización.
+			\item Configurar impresoras, escáneres y dispositivos periféricos.
+		\end{itemize}
+	}
+	{Todos los usuarios de la entidad.}
+	{
+		\begin{itemize}[leftmargin=*]
+			\item \textbf{Formación:} Técnico Superior en Informática o ramas afines.
+			\item \textbf{Experiencia:} 1 año en soporte técnico.
+			\item \textbf{Conocimientos:} Windows 10/11, Office 365, Mantenimiento de PC.
+		\end{itemize}
+	}
+	
+	\newpage
+	\section{Historial de Modificaciones}
+	\renewcommand{\arraystretch}{1.3}
+	\begin{longtable}{|p{2cm}|p{2.5cm}|p{7.5cm}|p{3cm}|}
+		\hline
+		\rowcolor{headergray} \textbf{Versión} & \textbf{Fecha} & \textbf{Descripción} & \textbf{Autor} \\
+		\hline
+		1.0 & 10/01/2018 & Emisión original por cambio de Core Bancario. & Gerencia TI \\
+		\hline
+		1.1 & 15/06/2020 & Inclusión de funciones de teletrabajo post-pandemia. & RRHH \\
+		\hline
+		2.0 & 15/01/2025 & Reestructuración por creación del Área de Seguridad y Ciberdefensa. & Ing. C. Méndez \\
+		\hline
+	\end{longtable}
+	
+\end{document}
